@@ -6,6 +6,11 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Привет! Я бот для управления чатом.")
+    
+@bot.chat_join_request_handler()
+def make_some(message: telebot.types.ChatJoinRequest):
+    bot.send_message(message.chat.id, 'I accepted a new user!')
+    bot.approve_chat_join_request(message.chat.id, message.from_user.id)
 
 @bot.message_handler(commands=['ban'])
 def ban_user(message):
